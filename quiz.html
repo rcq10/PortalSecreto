@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Portal Secreto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0f172a;
+            color: white;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .blur-effect {
+            backdrop-filter: blur(10px);
+            background-color: rgba(15, 23, 42, 0.8);
+        }
+
+        .option-card {
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.4);
+        }
+
+        /* Animação de carregamento */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #ec4899;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .star-rating i {
+            color: #f59e0b; /* Cor da estrela (amarelo) */
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Fundo animado -->
+    <div id="vanta-bg" class="fixed inset-0 -z-10"></div>
+
+    <main id="quiz-container" class="flex-1 flex flex-col items-center p-6 max-w-2xl mx-auto w-full">
+        <!-- Cabeçalho do questionário -->
+        <div class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2 gradient-text">Quiz de Compatibilidade</h1>
+            <p class="text-pink-300">Responda para encontrar sua parceira ideal</p>
+        </div>
+
+        <!-- Barra de progresso -->
+        <div class="w-full bg-slate-800 rounded-full h-2.5 mb-8">
+            <div id="progressBar" class="bg-gradient-to-r from-pink-500 to-purple-500 h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+        </div>
+
+        <!-- Pergunta 1 -->
+        <div id="firstQuestion" class="blur-effect rounded-2xl p-8 w-full border border-pink-900/50 shadow-lg shadow-purple-900/20 mb-8">
+            <h2 class="text-xl font-bold text-center mb-6">Qual dessas mulheres mais te atrai? <span class="text-2xl">😉</span></h2>
+            <div class="flex flex-col gap-4">
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🔥</span>
+                        <div>
+                            <h3 class="font-bold">Casada cuidadosa e discreta</h3>
+                            <p class="text-sm text-pink-200">Busca aventura sem compromisso</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🏠</span>
+                        <div>
+                            <h3 class="font-bold">Esposa fiel, busca novidade</h3>
+                            <p class="text-sm text-pink-200">Quer explorar sua sensualidade</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">⚡</span>
+                        <div>
+                            <h3 class="font-bold">Dominadora que comanda</h3>
+                            <p class="text-sm text-pink-200">Assumir o controle da situação</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🌸</span>
+                        <div>
+                            <h3 class="font-bold">Separada, sem amarras</h3>
+                            <p class="text-sm text-pink-200">Pronta para novas experiências</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Pergunta 2 -->
+        <div id="secondQuestion" class="blur-effect rounded-2xl p-8 w-full border border-pink-900/50 shadow-lg shadow-purple-900/20 mb-8" style="display: none;">
+            <h2 class="text-xl font-bold text-center mb-6">Como você costuma aproveitar seu tempo livre? <span class="text-2xl">🍑</span></h2>
+            <div class="flex flex-col gap-4">
+                 <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💬</span>
+                        <div>
+                            <h3 class="font-bold">Conversas picantes no privado</h3>
+                            <p class="text-sm text-pink-200">Adoro um bom bate-papo sensual</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">📱</span>
+                        <div>
+                            <h3 class="font-bold">Navegando em apps de conexão</h3>
+                            <p class="text-sm text-pink-200">Procurando novas amizades</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💖</span>
+                        <div>
+                            <h3 class="font-bold">Curtindo momentos a dois</h3>
+                            <p class="text-sm text-pink-200">Prefiro encontros presenciais</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">😊</span>
+                        <div>
+                            <h3 class="font-bold">Relaxando com alguém especial</h3>
+                            <p class="text-sm text-pink-200">Programas mais tranquilos</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Pergunta 3 -->
+        <div id="thirdQuestion" class="blur-effect rounded-2xl p-8 w-full border border-pink-900/50 shadow-lg shadow-purple-900/20 mb-8" style="display: none;">
+            <h2 class="text-xl font-bold text-center mb-6">O que você mais valoriza em uma conexão íntima?</h2>
+            <div class="flex flex-col gap-4">
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💬</span>
+                        <div>
+                            <h3 class="font-bold">Conversas quentes com liberdade</h3>
+                            <p class="text-sm text-pink-200">Adoro uma boa troca de ideias</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🔒</span>
+                        <div>
+                            <h3 class="font-bold">Segredos bem guardados</h3>
+                            <p class="text-sm text-pink-200">Discrição é fundamental</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🌸</span>
+                        <div>
+                            <h3 class="font-bold">Química fora do comum</h3>
+                            <p class="text-sm text-pink-200">Conexão especial e única</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🔥</span>
+                        <div>
+                            <h3 class="font-bold">Desejo mútuo e intensidade</h3>
+                            <p class="text-sm text-pink-200">Paixão e energia são essenciais</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Pergunta 4 -->
+        <div id="fourthQuestion" class="blur-effect rounded-2xl p-8 w-full border border-pink-900/50 shadow-lg shadow-purple-900/20 mb-8" style="display: none;">
+            <h2 class="text-xl font-bold text-center mb-6">Qual clima te deixa mais no ponto? <span class="text-2xl">😈</span></h2>
+            <div class="flex flex-col gap-4">
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🔮</span>
+                        <div>
+                            <h3 class="font-bold">Quarto escuro e tenso</h3>
+                            <p class="text-sm text-pink-200">Mistério e expectativa</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🍷</span>
+                        <div>
+                            <h3 class="font-bold">Vinho, velas e segundas intenções</h3>
+                            <p class="text-sm text-pink-200">Romance com pitada de pecado</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💬</span>
+                        <div>
+                            <h3 class="font-bold">Rolê discreto e sem hora</h3>
+                            <p class="text-sm text-pink-200">Liberdade sem pressa</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💌</span>
+                        <div>
+                            <h3 class="font-bold">Mensagens que esquentam</h3>
+                            <p class="text-sm text-pink-200">Provocações à distância</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Pergunta 5 -->
+        <div id="fifthQuestion" class="blur-effect rounded-2xl p-8 w-full border border-pink-900/50 shadow-lg shadow-purple-900/20 mb-8" style="display: none;">
+            <h2 class="text-xl font-bold text-center mb-6">O que mais te dá vontade de ir até o fim? <span class="text-2xl">😈</span></h2>
+            <div class="flex flex-col gap-4">
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🔥</span>
+                        <div>
+                            <h3 class="font-bold">Ninguém pode descobrir</h3>
+                            <p class="text-sm text-pink-200">O segredo é parte da emoção</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">😈</span>
+                        <div>
+                            <h3 class="font-bold">Até onde a provocação vai</h3>
+                            <p class="text-sm text-pink-200">O jogo de sedução sem limites</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💬</span>
+                        <div>
+                            <h3 class="font-bold">Mensagens ousadas</h3>
+                            <p class="text-sm text-pink-200">Palavras que levam à ação</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="option-card bg-gradient-to-br from-pink-900/50 to-purple-900/50 p-4 rounded-xl border border-pink-900/50 text-left">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💫</span>
+                        <div>
+                            <h3 class="font-bold">Encontros sem compromisso</h3>
+                            <p class="text-sm text-pink-200">Liberdade para explorar</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tela de Resultados -->
+        <div id="resultsScreen" class="blur-effect rounded-2xl p-8 w-full border border-pink-900/50 shadow-lg shadow-purple-900/20 mb-8 text-center" style="display: none;">
+             <div id="loading" class="flex flex-col items-center justify-center">
+                <div class="loader mb-4"></div>
+                <p class="text-lg text-pink-300">Analisando suas respostas...</p>
+             </div>
+             <div id="resultsContent" style="display: none;">
+                <h2 class="text-2xl font-bold mb-4 gradient-text">Match Encontrado!</h2>
+                <p class="text-pink-200 mb-6">Com base nas suas respostas, encontramos o perfil ideal para você. Prepare-se para uma nova conexão.</p>
+                <button id="viewMatchButton" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
+                    Ver meu Match
+                </button>
+             </div>
+        </div>
+    </main>
+    
+    <!-- PÁGINA DE PERFIS -->
+    <div id="profiles-container" class="hidden flex-1 flex-col items-center p-6 w-full">
+        <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center gradient-text">Perfis Disponíveis Agora</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl">
+            <!-- Perfil 1 -->
+            <div class="bg-slate-800/50 rounded-lg overflow-hidden border border-pink-900/50">
+                <img src="https://placehold.co/400x400/ec4899/ffffff?text=Mariana" alt="Mariana" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold">Mariana, 28</h3>
+                    <div class="star-rating flex items-center my-2">
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4"></i>
+                    </div>
+                    <p class="text-sm text-pink-200 mb-4">Casada discreta, busca aventuras sem compromisso.</p>
+                    <div class="flex justify-between items-center text-xs mb-4">
+                        <span class="flex items-center gap-1 text-green-400"><i data-feather="wifi" class="w-3 h-3"></i> Online agora</span>
+                        <span class="text-gray-400">2 mensagens</span>
+                    </div>
+                    <button class="view-profile-btn w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105" data-profile="mariana">Ver perfil completo</button>
+                </div>
+            </div>
+            <!-- Perfil 2 -->
+             <div class="bg-slate-800/50 rounded-lg overflow-hidden border border-pink-900/50">
+                <img src="https://placehold.co/400x400/8b5cf6/ffffff?text=Fernanda" alt="Fernanda" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold">Fernanda, 32</h3>
+                     <div class="star-rating flex items-center my-2">
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-sm text-pink-200 mb-4">Separada há pouco tempo, quer aproveitar a vida.</p>
+                     <div class="flex justify-between items-center text-xs mb-4">
+                        <span class="flex items-center gap-1 text-green-400"><i data-feather="wifi" class="w-3 h-3"></i> Online agora</span>
+                        <span class="text-gray-400">3 mensagens</span>
+                    </div>
+                    <button class="view-profile-btn w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105" data-profile="fernanda">Ver perfil completo</button>
+                </div>
+            </div>
+            <!-- Perfil 3 -->
+            <div class="bg-slate-800/50 rounded-lg overflow-hidden border border-pink-900/50">
+                <img src="https://placehold.co/400x400/ef4444/ffffff?text=Juliana" alt="Juliana" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold">Juliana, 25</h3>
+                    <div class="star-rating flex items-center my-2">
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        <i data-feather="star" class="w-4 h-4"></i>
+                    </div>
+                    <p class="text-sm text-pink-200 mb-4">Dominadora experiente, gosta de comandar.</p>
+                    <div class="flex justify-between items-center text-xs mb-4">
+                        <span class="flex items-center gap-1 text-green-400"><i data-feather="wifi" class="w-3 h-3"></i> Online agora</span>
+                        <span class="text-gray-400">2 mensagens</span>
+                    </div>
+                    <button class="view-profile-btn w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105" data-profile="juliana">Ver perfil completo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PÁGINAS DE DETALHE DOS PERFIS -->
+    <div id="profile-details-wrapper" class="hidden flex-1 w-full">
+        <!-- Perfil Detalhado Mariana -->
+        <div id="profile-detail-mariana" class="profile-page hidden flex-col items-center p-6 w-full max-w-4xl mx-auto">
+            <div class="w-full mb-4">
+                <button class="back-to-profiles-btn flex items-center gap-2 text-pink-300 hover:text-pink-400"><i data-feather="arrow-left"></i> Voltar para os perfis</button>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg overflow-hidden border border-pink-900/50 w-full">
+                <div class="p-4 flex items-center gap-4 border-b border-slate-700">
+                    <img src="https://placehold.co/100x100/ec4899/ffffff?text=M" alt="Mariana" class="w-20 h-20 rounded-full object-cover border-2 border-pink-500">
+                    <div>
+                        <h2 class="text-2xl font-bold">Mariana, 28</h2>
+                        <p class="text-sm text-gray-400 flex items-center gap-1"><i data-feather="map-pin" class="w-3 h-3"></i> São Paulo, SP</p>
+                        <div class="star-rating flex items-center mt-1">
+                            <i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-1">
+                    <img src="https://placehold.co/400x600/ec4899/ffffff?text=Foto+1" class="w-full h-auto object-cover aspect-[2/3]"><img src="https://placehold.co/400x600/ec4899/ffffff?text=Foto+2" class="w-full h-auto object-cover aspect-[2/3]"><img src="https://placehold.co/400x600/ec4899/ffffff?text=Foto+3" class="w-full h-auto object-cover aspect-[2/3]">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-2 gradient-text">Sobre mim</h3>
+                    <p class="text-pink-200 mb-4">Casada discreta, busco aventuras e novas emoções sem compromisso. Adoro uma boa conversa e momentos intensos.</p>
+                    <h3 class="font-bold text-lg mb-2 gradient-text">Serviços</h3>
+                    <ul class="list-disc list-inside text-pink-200 space-y-1"><li>Encontros casuais</li><li>Jantar e companhia</li><li>Conversas online</li></ul>
+                </div>
+                <div class="p-4 border-t border-slate-700">
+                    <a href="https://wa.me/5511999999991?text=Ol%C3%A1%2C%20Mariana!%20Vim%20do%20Portal%20Secreto." target="_blank" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 flex items-center justify-center gap-2">
+                        <i data-feather="message-circle"></i> Falar com Mariana no WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Perfil Detalhado Fernanda -->
+        <div id="profile-detail-fernanda" class="profile-page hidden flex-col items-center p-6 w-full max-w-4xl mx-auto">
+             <div class="w-full mb-4">
+                <button class="back-to-profiles-btn flex items-center gap-2 text-pink-300 hover:text-pink-400"><i data-feather="arrow-left"></i> Voltar para os perfis</button>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg overflow-hidden border border-pink-900/50 w-full">
+                <div class="p-4 flex items-center gap-4 border-b border-slate-700">
+                    <img src="https://placehold.co/100x100/8b5cf6/ffffff?text=F" alt="Fernanda" class="w-20 h-20 rounded-full object-cover border-2 border-purple-500">
+                    <div>
+                        <h2 class="text-2xl font-bold">Fernanda, 32</h2>
+                        <p class="text-sm text-gray-400 flex items-center gap-1"><i data-feather="map-pin" class="w-3 h-3"></i> Rio de Janeiro, RJ</p>
+                        <div class="star-rating flex items-center mt-1">
+                            <i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-1">
+                    <img src="https://placehold.co/400x600/8b5cf6/ffffff?text=Foto+1" class="w-full h-auto object-cover aspect-[2/3]"><img src="https://placehold.co/400x600/8b5cf6/ffffff?text=Foto+2" class="w-full h-auto object-cover aspect-[2/3]"><img src="https://placehold.co/400x600/8b5cf6/ffffff?text=Foto+3" class="w-full h-auto object-cover aspect-[2/3]">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-2 gradient-text">Sobre mim</h3>
+                    <p class="text-pink-200 mb-4">Recém-separada e pronta para redescobrir os prazeres da vida. Gosto de leveza, bom humor e conexões verdadeiras.</p>
+                    <h3 class="font-bold text-lg mb-2 gradient-text">Serviços</h3>
+                    <ul class="list-disc list-inside text-pink-200 space-y-1"><li>Passeios ao ar livre</li><li>Happy hour</li><li>Viagens curtas</li></ul>
+                </div>
+                <div class="p-4 border-t border-slate-700">
+                    <a href="https://wa.me/5521999999992?text=Ol%C3%A1%2C%20Fernanda!%20Vim%20do%20Portal%20Secreto." target="_blank" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 flex items-center justify-center gap-2">
+                        <i data-feather="message-circle"></i> Falar com Fernanda no WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Perfil Detalhado Juliana -->
+        <div id="profile-detail-juliana" class="profile-page hidden flex-col items-center p-6 w-full max-w-4xl mx-auto">
+             <div class="w-full mb-4">
+                <button class="back-to-profiles-btn flex items-center gap-2 text-pink-300 hover:text-pink-400"><i data-feather="arrow-left"></i> Voltar para os perfis</button>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg overflow-hidden border border-pink-900/50 w-full">
+                <div class="p-4 flex items-center gap-4 border-b border-slate-700">
+                    <img src="https://placehold.co/100x100/ef4444/ffffff?text=J" alt="Juliana" class="w-20 h-20 rounded-full object-cover border-2 border-red-500">
+                    <div>
+                        <h2 class="text-2xl font-bold">Juliana, 25</h2>
+                        <p class="text-sm text-gray-400 flex items-center gap-1"><i data-feather="map-pin" class="w-3 h-3"></i> Belo Horizonte, MG</p>
+                        <div class="star-rating flex items-center mt-1">
+                           <i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4 fill-current"></i><i data-feather="star" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-1">
+                    <img src="https://placehold.co/400x600/ef4444/ffffff?text=Foto+1" class="w-full h-auto object-cover aspect-[2/3]"><img src="https://placehold.co/400x600/ef4444/ffffff?text=Foto+2" class="w-full h-auto object-cover aspect-[2/3]"><img src="https://placehold.co/400x600/ef4444/ffffff?text=Foto+3" class="w-full h-auto object-cover aspect-[2/3]">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-2 gradient-text">Sobre mim</h3>
+                    <p class="text-pink-200 mb-4">Gosto de estar no controle e explorar novas sensações. Se você não tem medo de intensidade, encontrou a pessoa certa.</p>
+                    <h3 class="font-bold text-lg mb-2 gradient-text">Serviços</h3>
+                    <ul class="list-disc list-inside text-pink-200 space-y-1"><li>Sessões temáticas</li><li>Jogos de dominação</li><li>Experiências BDSM (iniciantes)</li></ul>
+                </div>
+                <div class="p-4 border-t border-slate-700">
+                     <a href="https://wa.me/5531999999993?text=Ol%C3%A1%2C%20Juliana!%20Vim%20do%20Portal%20Secreto." target="_blank" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 flex items-center justify-center gap-2">
+                        <i data-feather="message-circle"></i> Falar com Juliana no WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Rodapé -->
+    <footer class="text-center p-4 text-sm text-gray-400">
+        <p>© 2023 Portal Secreto. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script>
+        // Inicializa o fundo animado
+        VANTA.GLOBE({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x8b5cf6,
+            backgroundColor: 0x0f172a,
+            size: 0.8
+        });
+    </script>
+    <script>
+        // Lógica de navegação do quiz
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        const progressBar = document.getElementById('progressBar');
+        const questionIds = ['firstQuestion', 'secondQuestion', 'thirdQuestion', 'fourthQuestion', 'fifthQuestion'];
+        const resultsScreen = document.getElementById('resultsScreen');
+        const loadingDiv = document.getElementById('loading');
+        const resultsContentDiv = document.getElementById('resultsContent');
+        const quizContainer = document.getElementById('quiz-container');
+        const profilesContainer = document.getElementById('profiles-container');
+        const viewMatchButton = document.getElementById('viewMatchButton');
+        const profileDetailsWrapper = document.getElementById('profile-details-wrapper');
+        const viewProfileButtons = document.querySelectorAll('.view-profile-btn');
+        const backToProfilesButtons = document.querySelectorAll('.back-to-profiles-btn');
+
+        function showQuestion(questionNumber) {
+            // Esconde todas as perguntas
+            questionIds.forEach(id => {
+                const q = document.getElementById(id);
+                if (q) q.style.display = 'none';
+            });
+            
+            // Esconde a tela de resultados
+            resultsScreen.style.display = 'none';
+
+            // Mostra a pergunta atual
+            const currentQuestionId = questionIds[questionNumber - 1];
+            if (currentQuestionId) {
+                document.getElementById(currentQuestionId).style.display = 'block';
+            }
+
+            // Atualiza a barra de progresso
+            progressBar.style.width = `${((questionNumber - 1) / totalQuestions) * 100}%`;
+
+            // Rola para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            currentQuestion = questionNumber;
+        }
+
+        function finishQuiz() {
+             // Esconde a última pergunta
+            document.getElementById(questionIds[totalQuestions - 1]).style.display = 'none';
+            
+            // Atualiza a barra de progresso para 100%
+            progressBar.style.width = '100%';
+
+            // Mostra a tela de resultados com o loading
+            resultsScreen.style.display = 'block';
+            loadingDiv.style.display = 'flex';
+            resultsContentDiv.style.display = 'none';
+
+            // Simula uma análise de 2 segundos
+            setTimeout(() => {
+                loadingDiv.style.display = 'none';
+                resultsContentDiv.style.display = 'block';
+                feather.replace(); // Recarrega os ícones após a exibição dos resultados
+            }, 2000);
+        }
+        
+        function showProfilesList() {
+            quizContainer.classList.add('hidden');
+            profileDetailsWrapper.classList.add('hidden');
+            document.querySelectorAll('.profile-page').forEach(page => page.classList.add('hidden'));
+
+            profilesContainer.classList.remove('hidden');
+            profilesContainer.classList.add('flex');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            feather.replace(); 
+        }
+
+        function showProfileDetail(profileName) {
+            profilesContainer.classList.add('hidden');
+            
+            profileDetailsWrapper.classList.remove('hidden');
+            profileDetailsWrapper.classList.add('flex');
+
+            const profilePage = document.getElementById(`profile-detail-${profileName}`);
+            profilePage.classList.remove('hidden');
+            profilePage.classList.add('flex');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            feather.replace();
+        }
+
+
+        // Adiciona os event listeners para todos os botões de opção
+        questionIds.forEach((id, index) => {
+            const questionDiv = document.getElementById(id);
+            if (questionDiv) {
+                const optionButtons = questionDiv.querySelectorAll('.option-card');
+                optionButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const nextQuestion = index + 2;
+                        if (nextQuestion <= totalQuestions) {
+                            showQuestion(nextQuestion);
+                        } else {
+                            finishQuiz();
+                        }
+                    });
+                });
+            }
+        });
+        
+        // Adiciona evento de clique para o botão de ver o match
+        viewMatchButton.addEventListener('click', showProfilesList);
+
+        // Adiciona evento para os botões "Ver perfil completo"
+        viewProfileButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const profileName = button.dataset.profile;
+                showProfileDetail(profileName);
+            });
+        });
+
+        // Adiciona evento para os botões de "Voltar"
+        backToProfilesButtons.forEach(button => {
+            button.addEventListener('click', showProfilesList);
+        });
+
+        // Inicializa a primeira pergunta
+        showQuestion(1);
+
+        // Inicializa os ícones
+        feather.replace();
+    </script>
+</body>
+
+</html>
+

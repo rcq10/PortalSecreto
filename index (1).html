@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Secreto - Conexões Discretas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0f172a;
+            color: white;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .blur-effect {
+            backdrop-filter: blur(10px);
+            background-color: rgba(15, 23, 42, 0.7);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Animated Background -->
+    <div id="vanta-bg" class="fixed inset-0 -z-10"></div>
+    
+    <main class="flex-1 flex flex-col items-center justify-center p-6 max-w-2xl mx-auto text-center">
+        <!-- Logo/Header -->
+        <div class="mb-8" data-aos="fade-down">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2 gradient-text">Portal Secreto</h1>
+            <p class="text-lg text-pink-300">Conexões Discretas</p>
+        </div>
+
+        <!-- Attention Box -->
+        <div class="blur-effect rounded-2xl p-8 mb-8 w-full border border-pink-900/50 shadow-lg shadow-purple-900/20" data-aos="fade-up">
+            <div class="flex items-center justify-center mb-4">
+                <i data-feather="alert-triangle" class="w-8 h-8 text-yellow-400 mr-2"></i>
+                <h2 class="text-2xl font-bold">ATENÇÃO</h2>
+            </div>
+            
+            <p class="text-lg mb-6 leading-relaxed">
+                Você nunca mais ficará um dia sem prazer depois de acessar este portal secreto! Aqui estão centenas de mulheres próximas de você buscando conexões discretas e intensas.
+            </p>
+            
+            <div class="bg-gradient-to-r from-pink-900/50 to-purple-900/50 p-4 rounded-lg mb-6">
+                <p class="font-bold text-xl flex items-center justify-center">
+                    <i data-feather="users" class="w-5 h-5 mr-2"></i>
+                    +3.665 Mulheres ativas essa semana
+                </p>
+            </div>
+            
+            <p class="text-pink-200 italic mb-6">
+                Você promete manter isso em segredo? <span class="text-2xl">🤫</span>
+            </p>
+            
+            <div class="border-t border-pink-900/50 pt-6">
+                <div class="flex items-center justify-center text-sm">
+                    <i data-feather="map-pin" class="w-4 h-4 mr-2 text-purple-300"></i>
+                    <span>Por favor, ative a localização do seu dispositivo para encontrar mulheres próximas com perfil compatível.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <a href="formulario.html" class="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-pink-900/30 transition-all transform hover:scale-105 flex items-center" data-aos="zoom-in">
+            <i data-feather="lock" class="w-5 h-5 mr-2"></i>
+            ACESSAR PORTAL SECRETO
+        </a>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center p-4 text-sm text-gray-400">
+        <p>© 2023 Portal Secreto. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script>
+        VANTA.GLOBE({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x8b5cf6,
+            backgroundColor: 0x0f172a,
+            size: 0.8
+        });
+    </script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
